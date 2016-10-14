@@ -3,26 +3,40 @@ def print_action(action, amount)
   puts "You've asked to #{action} an amount of #{amount}$. Performing your request..."
 end
 
-balance = 1000
+#balance = 1000
+balance = rand(100..1000)
 
 print "Please enter your personal name:  "
 name = gets.chomp.capitalize!
 
-print "What action would you like to perform?  "
+print "What action would you like to perform (withdraw,deposit,view)?  "
 action = gets.chomp
 
-amount = 20
+print "Please enter amount:  "
+amount = gets.chomp!
+amount = amount.to_i
+#amount = 20
 
-print_action(amount)
+print_action(action,amount)
 
 if action == "withdraw"
+  priv = balance
   balance -= amount
 elsif action == "deposit"
+  priv = balance
   balance += amount
+elsif action == "view"
+  # nothing to do
+else
+  raise "You entered a wrong action #{action} !!!!"
+end
 
-
-puts "Hi #{name}, Your current balance was changed and is now: #{balance}$"  
-
+if ((action == "withdraw") || (action == "deposit"))
+    puts "Hi #{name}, Your current balance #{priv}$ was changed and is now: #{balance}$"  
+elsif action == "view"
+    puts "Hi #{name}, Your current balance is : #{balance}$"  
+else
+end
 
 # Bank home assignment
 # ---------------------
@@ -40,3 +54,4 @@ puts "Hi #{name}, Your current balance was changed and is now: #{balance}$"
 #   5. Okay. now pay attention to the "balance" variable. There is no way to know what was the initial balance before the change. Please also print what was the previous balance in every place that you change it ("withdraw" and "deposit")
 #   6. What happens when you input an unknown “action” like “stop” or “blabla”? I think this is unclear. Let’s raise an exception when an unclear action is being set as the “action” by the user input.
 #   7. And finally a question: Why did I use the “print_action” method in this code? What principle out of the “coding practices for beginners” we’ve learned (see lecture notes) does it serve? Write the answer as a comment in the code.
+#Answer: the reason to write the function is not to repeat the code, when it can be used with changing parameter
